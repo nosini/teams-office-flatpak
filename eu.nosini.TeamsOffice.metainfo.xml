@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>eu.nosini.TeamsOffice</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Teams Office</name>
+  <summary>Teams client with Word and Excel access for local AI agents</summary>
+  <developer id="io.github.ismaelmartinez">
+    <name>Ismael Martinez</name>
+  </developer>
+  <description>
+    <p>
+      Teams Office is Teams for Linux, an unofficial Microsoft Teams client,
+      with a bridge that lets AI agents on the same computer work in the Word
+      documents and Excel workbooks open in Teams.
+    </p>
+    <ul>
+      <li>Read and change Excel cells, values and formulas</li>
+      <li>Read Word paragraphs and replace their text</li>
+      <li>Changes go through an Office add-in, so Office saves them and other people editing the same file see them</li>
+      <li>Agents connect over the Model Context Protocol (MCP) through a private local socket</li>
+    </ul>
+    <p>
+      It installs next to the regular Teams for Linux Flatpak, with its own
+      sign-in and settings. This is an unofficial Flatpak build.
+    </p>
+  </description>
+  <launchable type="desktop-id">eu.nosini.TeamsOffice.desktop</launchable>
+  <url type="homepage">https://github.com/IsmaelMartinez/teams-for-linux</url>
+  <url type="bugtracker">https://github.com/nosini/teams-for-linux/issues</url>
+  <url type="vcs-browser">https://github.com/nosini/teams-for-linux</url>
+  <screenshots>
+    <screenshot type="default">
+      <caption>General chat</caption>
+      <image>https://iili.io/sUyRS9.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Calendar view</caption>
+      <image>https://iili.io/sUyuFS.png</image>
+    </screenshot>
+  </screenshots>
+  <branding>
+    <color type="primary" scheme_preference="light">#6264a7</color>
+    <color type="primary" scheme_preference="dark">#464775</color>
+  </branding>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="2.27.0" date="2026-10-21">
+      <description>
+        <p>Teams for Linux 2.27.0 with Word and Excel access for local agents.</p>
+      </description>
+    </release>
+  </releases>
+</component>

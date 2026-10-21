@@ -1,0 +1,11 @@
+# flatpak-builder output
+/.flatpak-builder/
+/build-dir/
+/repo/
+/signed-repo/
+*.flatpak
+# Generator checkouts and virtual environments (scripts/builder-tools.sh)
+/.cache/
+# A checkout of the app for reading its source
+/upstream/
+__pycache__/

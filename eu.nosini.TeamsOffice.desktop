@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Teams Office
+Comment=Teams for Linux with Word and Excel access for local AI agents
+Icon=eu.nosini.TeamsOffice
+Exec=teams-office %U
+Terminal=false
+StartupNotify=true
+StartupWMClass=eu.nosini.TeamsOffice
+Categories=Network;InstantMessaging;Chat;
+MimeType=x-scheme-handler/msteams;
+Keywords=Microsoft;Teams;MCP;Word;Excel;

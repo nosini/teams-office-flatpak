@@ -1,0 +1,7 @@
+#!/bin/sh
+# Start Teams for Linux with the Office MCP bridge and its add-in enabled,
+# without changing the user's config.json. Each sandbox instance gets its own
+# /tmp, so a second launch could not find the running instance's socket
+# there; a shared TMPDIR lets it hand over to the open window instead.
+export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
+exec zypak-wrapper /app/teams-office/teams-for-linux --mcp.enabled --mcp.addin.enabled "$@"

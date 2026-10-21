@@ -1,0 +1,8 @@
+{
+  "eu.nosini.TeamsOffice": {
+    "appid-url-not-reachable": "nosini.eu has no website yet; the linter requires https://nosini.eu to answer.",
+    "appstream-external-screenshot-url": "Self-hosted repository: screenshots stay at their upstream URLs instead of Flathub's media mirror.",
+    "appstream-screenshots-not-mirrored-in-ostree": "Self-hosted repository: no screenshots ref is published.",
+    "finish-args-login1-system-talk-name": "Electron's powerMonitor listens for login1 PrepareForSleep to handle suspend and resume, as in the upstream Teams for Linux Flatpak."
+  }
+}

@@ -45,6 +45,12 @@
   </branding>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.0-1" date="2026-10-21">
+      <description>
+        <p>More Word and Excel editing tools for local agents. Teams channel file reads and writes, including large files, and live editing in SharePoint's Markdown editor can be turned on in config.json.</p>
+        <p>The bridge now starts after its local certificate expires, lists documents promptly while an add-in pane is still loading, and reports uploads Microsoft rejected as not saved.</p>
+      </description>
+    </release>
     <release version="2.27.0" date="2026-10-21">
       <description>
         <p>Teams for Linux 2.27.0 with Word and Excel access for local agents.</p>

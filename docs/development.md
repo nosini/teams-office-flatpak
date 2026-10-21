@@ -6,7 +6,8 @@ The app is the `feature/mcp-office` branch of
 [nosini/teams-for-linux](https://github.com/nosini/teams-for-linux): Teams
 for Linux with the Office MCP bridge and its Word and Excel add-ins. Its
 releases are tagged `office-vVERSION`, after the Teams for Linux version they
-are based on. The manifest pins such a tag and its commit.
+are based on. A later app release on the same version adds a revision, such as
+`office-v2.27.0-1`. The manifest pins such a tag and its commit.
 
 The `teams-office` module builds that checkout the way upstream builds its
 Linux packages, with electron-builder, but offline: `npm ci` installs from
@@ -231,9 +232,10 @@ Push a tag such as `v1.2.3` on the commit to package. A numeric packaging
 revision, such as `v1.2.3-1`, is also stable. Other suffixes, such as
 `v1.2.4-rc1`, are prereleases: they build and test, but never publish to the
 stable Flatpak repository and never become the latest stable GitHub Release.
-Tag this repository with the Teams for Linux version the app is based on,
-such as `v2.27.0` for `office-v2.27.0`, and with `v2.27.0-1` for a later
-packaging change of the same version.
+Tag this repository with the version of the app tag it packages, such as
+`v2.27.0` for `office-v2.27.0` and `v2.27.0-1` for `office-v2.27.0-1`. Both
+repositories share the revision numbers: a packaging change alone takes the
+next unused revision, and the next app release on that version skips it.
 
 After all architecture builds and tests succeed, and after signing,
 verification and Pages deployment succeed when publication is enabled, a

@@ -45,6 +45,12 @@
   </branding>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.0-2" date="2026-10-22">
+      <description>
+        <p>Agents can create Word documents in the current folder or another existing SharePoint folder, open them in background tabs and import the Office Bridge automatically.</p>
+        <p>Document sign-in can survive app restarts. This Flatpak enables bounded retention of SharePoint document sessions; Microsoft still controls expiry, sign-out and authentication requirements.</p>
+      </description>
+    </release>
     <release version="2.27.0-1" date="2026-10-21">
       <description>
         <p>More Word and Excel editing tools for local agents. Teams channel file reads and writes, including large files, and live editing in SharePoint's Markdown editor can be turned on in config.json.</p>

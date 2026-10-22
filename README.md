@@ -51,29 +51,33 @@ Start **Teams Office** from your application menu, or with:
 flatpak run eu.nosini.TeamsOffice
 ```
 
-Sign in to Teams, then open a Word or Excel file with **Edit in Teams**. To
-give agents access to it:
+Sign in to Teams. Agents can open Word and Excel documents in independent
+background tabs and import the Office Bridge automatically. They can also
+create a Word document in the current folder or another existing SharePoint
+folder. Sign-in, MFA and your organization's add-in policy can require your
+interaction.
 
-1. In Office's **Add-ins** menu, choose **Upload My Add-in** and select the
-   add-in manifest for the app you are in:
+Point your agent at the bridge's private socket:
 
-   ```text
-   ~/.var/app/eu.nosini.TeamsOffice/config/teams-for-linux/mcp/excel-addin.xml
-   ~/.var/app/eu.nosini.TeamsOffice/config/teams-for-linux/mcp/word-addin.xml
-   ```
+```text
+~/.var/app/eu.nosini.TeamsOffice/config/teams-for-linux/mcp/bridge.sock
+```
 
-   Your organization's Office policy must allow uploading add-ins.
-2. Keep the **Teams Office Bridge** pane open until it says **Ready for local
-   agent access**. Each document needs its own pane.
-3. Point your agent at the bridge's socket:
+The [Office agents guide](https://github.com/nosini/teams-for-linux/blob/feature/mcp-office/docs-site/docs/office-agents.md)
+explains the tools, background tabs, automatic setup, how to export a small
+MCP relay and how to pass the socket into a container.
 
-   ```text
-   ~/.var/app/eu.nosini.TeamsOffice/config/teams-for-linux/mcp/bridge.sock
-   ```
+For manual setup, open a Word or Excel file with **Edit in Teams**. In
+Office's **Add-ins** menu, choose **Upload My Add-in** and select the
+corresponding manifest:
 
-   The [Office agents guide](https://github.com/nosini/teams-for-linux/blob/feature/mcp-office/docs-site/docs/office-agents.md)
-   shows how to export a small relay that connects an MCP client to this
-   socket, and how to pass the socket into a container.
+```text
+~/.var/app/eu.nosini.TeamsOffice/config/teams-for-linux/mcp/excel-addin.xml
+~/.var/app/eu.nosini.TeamsOffice/config/teams-for-linux/mcp/word-addin.xml
+```
+
+Keep the **Teams Office Bridge** pane open until it says **Ready for local
+agent access**. Each document needs its own pane.
 
 The paths above are the defaults; Teams Office prints the real ones when it
 starts from a terminal. Expose only the socket to agents, never the whole
@@ -91,6 +95,12 @@ read again.
   settings are kept in `~/.var/app/eu.nosini.TeamsOffice`.
 - The bridge and its add-in are switched on at every start; you don't need
   to change `config.json`.
+- Document-session retention is enabled. Session-only SharePoint sign-in
+  cookies get a local expiry of up to seven days, so opening a document can
+  keep working after a restart. Existing server expiry, sign-out and
+  organizational authentication requirements still apply. You can turn it
+  off for a launch with
+  `flatpak run eu.nosini.TeamsOffice --mcp.documentSession.enabled=false`.
 - The add-in is served from `https://127.0.0.1:39847`. Only one copy of Teams
   with the Office bridge can run at a time.
 

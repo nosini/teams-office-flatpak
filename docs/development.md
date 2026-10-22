@@ -20,8 +20,13 @@ Playwright's test browsers. The unpacked app goes to
 `/app/teams-office`, next to the Electron2 BaseApp's Zypak, which provides
 Chromium's sandbox inside Flatpak.
 
-`launcher/teams-office` starts it with `--mcp.enabled --mcp.addin.enabled`,
-so the bridge is on without changes to the user's `config.json`. The app ID
+`launcher/teams-office` starts it with `--mcp.enabled --mcp.addin.enabled
+--mcp.documentSession.enabled`, so the bridge, automatic setup and bounded
+document-session retention are enabled without changes to `config.json`.
+The app's default retention is seven days; existing cookie expiry and sign-out
+are respected. An explicit `--mcp.documentSession.enabled=false` argument
+disables retention for that launch; the wrapper then omits its default flag
+to avoid duplicate values in the app's parser. The app ID
 differs from the upstream Flatpak's, so both can be installed and keep
 separate profiles. libcbor and libfido2 provide the `fido2-assert` tool that
 Teams for Linux uses for security-key sign-in, as in the upstream Flatpak.

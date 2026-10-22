@@ -112,8 +112,8 @@ modules:
       # Teams for Linux with the Office MCP bridge.
       - type: git
         url: https://github.com/nosini/teams-for-linux.git
-        tag: office-v2.27.0-1
-        commit: 54e63b5237c9b42ebd40940e3f0a332e4f290d1a
+        tag: office-v2.27.0-2
+        commit: 0898b9e5c2bd0d74f17efc0c40385c27fc6a9e6b
         x-checker-data:
           type: git
           # A -N suffix marks a later app build on the same upstream version.

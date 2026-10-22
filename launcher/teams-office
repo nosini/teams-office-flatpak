@@ -1,7 +1,20 @@
 #!/bin/sh
-# Start Teams for Linux with the Office MCP bridge and its add-in enabled,
+# Start Teams for Linux with the Office MCP bridge, its add-in and document-session retention enabled,
 # without changing the user's config.json. Each sandbox instance gets its own
 # /tmp, so a second launch could not find the running instance's socket
 # there; a shared TMPDIR lets it hand over to the open window instead.
 export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
+# Dotted options are not declared boolean options in the app's parser. Passing
+# both a default and an explicit override would produce an array, not false.
+document_session_option=--mcp.documentSession.enabled
+for argument do
+    case "$argument" in
+        --mcp.documentSession.enabled|--mcp.documentSession.enabled=*|--no-mcp.documentSession.enabled)
+            document_session_option=
+            ;;
+    esac
+done
+if [ -n "$document_session_option" ]; then
+    set -- "$document_session_option" "$@"
+fi
 exec zypak-wrapper /app/teams-office/teams-for-linux --mcp.enabled --mcp.addin.enabled "$@"

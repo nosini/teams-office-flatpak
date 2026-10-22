@@ -8,6 +8,7 @@ test -x /app/bin/teams-office
 test -x /app/teams-office/teams-for-linux
 test -f /app/teams-office/resources/app.asar
 test -x /app/bin/fido2-assert
+grep -q -- '--mcp.documentSession.enabled' /app/bin/teams-office
 
 # The packaged Electron, run as Node.js against the Platform runtime, starts
 # the Office add-in host and the MCP endpoint the way the app does: it makes
@@ -26,12 +27,17 @@ const { startAddinHost } = require(`${root}/app/office/addinHost`);
 const { startLocalEndpoint } = require(`${root}/app/mcp/localEndpoint`);
 const { createOfficeMcpServer } = require(`${root}/app/mcp/server`);
 const { OfficeInspector } = require(`${root}/app/office/inspector`);
+const { DocumentLocations } = require(`${root}/app/office/documentLocations`);
 
 async function main() {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'office-check-'));
   let host;
   let endpoint;
   try {
+    assert.equal(typeof DocumentLocations.prototype.resolve, 'function');
+    assert.equal(typeof DocumentLocations.prototype.listFolders, 'function');
+    const blank = await fs.readFile(`${root}/app/office/templates/blank.docx`);
+    assert.equal(blank.subarray(0, 4).toString('hex'), '504b0304');
     const mcpDirectory = path.join(directory, 'mcp');
     await fs.mkdir(mcpDirectory, { mode: 0o700 });
     // Exercises the runtime's openssl executable, key generation and HTTPS.
@@ -51,7 +57,7 @@ async function main() {
       request.on('error', reject);
     });
     endpoint = await startLocalEndpoint({ directory: mcpDirectory,
-      createServer: () => createOfficeMcpServer(new OfficeInspector(() => []), { listDocuments: async () => ({ documents: [] }) }),
+      createServer: () => createOfficeMcpServer(new OfficeInspector(() => []), { listDocuments: async () => ({ documents: [] }) }, null, null, null, {}),
     });
     assert.equal((await fs.stat(endpoint.socketPath)).mode & 0o777, 0o600);
     await new Promise((resolve, reject) => {
@@ -64,15 +70,26 @@ async function main() {
       } })}\n`));
       socket.on('data', (chunk) => {
         buffer += chunk;
-        if (!buffer.includes('\n')) return;
-        try {
-          assert.equal(JSON.parse(buffer.split('\n')[0]).result.serverInfo.name, 'teams-for-linux-office');
-          socket.destroy();
-          resolve();
-        } catch (error) { socket.destroy(); reject(error); }
+        while (buffer.includes('\n')) {
+          const newline = buffer.indexOf('\n'), line = buffer.slice(0, newline);
+          buffer = buffer.slice(newline + 1);
+          try {
+            const response = JSON.parse(line);
+            if (response.id === 1) {
+              assert.equal(response.result.serverInfo.name, 'teams-for-linux-office');
+              socket.write(`${JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' })}\n`);
+              socket.write(`${JSON.stringify({ jsonrpc: '2.0', id: 2, method: 'tools/list', params: {} })}\n`);
+            } else if (response.id === 2) {
+              const names = response.result.tools.map((tool) => tool.name);
+              for (const name of ['office_open_document', 'office_setup_bridge', 'office_create_document',
+                'office_resolve_location', 'office_list_location_folders']) assert.ok(names.includes(name), name);
+              socket.destroy(); resolve();
+            }
+          } catch (error) { socket.destroy(); reject(error); return; }
+        }
       });
     });
-    console.log('Installed Flatpak: certificates, add-in assets and MCP handshake passed.');
+    console.log('Installed Flatpak: certificates, add-in assets, Word template, MCP handshake and document tools passed.');
   } finally {
     await endpoint?.close();
     await host?.close();

@@ -63,7 +63,7 @@ Point your agent at the bridge's private socket:
 ~/.var/app/eu.nosini.TeamsOffice/config/teams-for-linux/mcp/bridge.sock
 ```
 
-The [Office agents guide](https://github.com/nosini/teams-for-linux-mcp/blob/feature/mcp-office/docs/office-agents.md)
+The [Office agents guide](https://github.com/nosini/teams-for-linux-mcp/blob/main/docs/office-agents.md)
 explains the tools, background tabs, automatic setup, how to export a small
 MCP relay and how to pass the socket into a container.
 

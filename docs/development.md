@@ -2,15 +2,20 @@
 
 ## How the package works
 
-The app is the `feature/mcp-office` branch of
-[nosini/teams-for-linux](https://github.com/nosini/teams-for-linux): Teams
+The app is maintained in
+[nosini/teams-for-linux-mcp](https://github.com/nosini/teams-for-linux-mcp): Teams
 for Linux with the Office MCP bridge and its Word and Excel add-ins. Its
 releases are tagged `office-vVERSION`, after the Teams for Linux version they
 are based on. A later app release on the same version adds a revision, such as
 `office-v2.27.0-1`. The manifest pins such a tag and its commit.
 
 The `teams-office` module builds that checkout the way upstream builds its
-Linux packages, with electron-builder, but offline: `npm ci` installs from
+Linux packages, with electron-builder, but offline. New source tags keep
+Teams for Linux as a pinned submodule. The build checks out that submodule,
+assembles the app with `node scripts/prepare-app.js`, and builds from
+`build/teams-office`. Existing tags still build from the source root.
+
+In either layout, `npm ci` installs from
 an npm cache made of the sources in `generated-sources.json`, and
 electron-builder takes the Electron release for the build's architecture
 (`electronDist`) and Electron's headers from the same sources. With the
@@ -41,8 +46,11 @@ Electron doesn't use. The README explains each one.
 - `eu.nosini.TeamsOffice.metainfo.xml` and `.desktop`: software-center
   metadata and launcher. The icon comes from the app's source.
 - `generated-sources.json`: the pinned npm packages and Electron downloads,
-  generated from the app's `package-lock.json` by
+  generated from the app's `dependencies/package-lock.json` (or
+  `package-lock.json` in older tags) by
   `scripts/generate-node-deps.sh`.
+- `scripts/build-app.sh`: assembles the app when needed, then builds and
+  installs it from the appropriate source directory.
 - `launcher/teams-office`: the start script installed as `/app/bin/teams-office`.
 - `lint-exceptions.json`: linter errors that don't apply to a self-hosted
   repository, each with its reason.
@@ -349,7 +357,8 @@ checkout with `gh workflow run update.yml`.
 ## npm dependencies
 
 `generated-sources.json` holds every package in the app's
-`package-lock.json`, including the development tools the build needs, the
+`dependencies/package-lock.json` (`package-lock.json` in older source tags),
+including the development tools the build needs, the
 Electron release for each architecture and Electron's headers for compiling
 native modules. After changing the app's commit
 by hand, regenerate it:
@@ -361,7 +370,7 @@ bash scripts/generate-node-deps.sh
 The script reads the commit from the manifest, fetches that commit's
 lockfile and runs flatpak-node-generator from flatpak-builder-tools in a
 virtual environment under `.cache/`. To use a lockfile from a commit that
-isn't pushed yet, pass it with `LOCKFILE=path/to/package-lock.json`.
+isn't pushed yet, pass it with `LOCKFILE=path/to/dependencies/package-lock.json`.
 
 The generator also adds Playwright's browsers, which upstream uses for its
 end-to-end tests. The script leaves them out: they are only downloaded by

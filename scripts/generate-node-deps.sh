@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Regenerate generated-sources.json, the npm packages and Electron downloads
 # of the teams-office module, from the package-lock.json of the commit the
-# manifest pins. Run it after changing that commit.
+# manifest pins (dependencies/package-lock.json in the submodule layout).
+# Run it after changing that commit.
 #
 # LOCKFILE=path/to/package-lock.json uses a local lockfile instead, for a
 # commit that hasn't been pushed yet.
@@ -38,7 +39,12 @@ EOF
   )
   git init -q "$work/source"
   git -C "$work/source" fetch -q --depth=1 "$url" "$commit"
-  git -C "$work/source" show FETCH_HEAD:package-lock.json > "$work/package-lock.json"
+  lock_path=dependencies/package-lock.json
+  # Existing release tags predate the source reorganization.
+  if ! git -C "$work/source" cat-file -e "FETCH_HEAD:$lock_path" 2>/dev/null; then
+    lock_path=package-lock.json
+  fi
+  git -C "$work/source" show "FETCH_HEAD:$lock_path" > "$work/package-lock.json"
 fi
 
 # Electron's headers let electron-builder compile native modules offline.

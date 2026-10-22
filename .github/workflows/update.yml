@@ -45,7 +45,7 @@ jobs:
 
       # flatpak-external-data-checker follows each source's x-checker-data,
       # updates the manifest pins and adds the main source's release to the
-      # metainfo file. A new Teams commit comes with a new package-lock.json,
+      # metainfo file. A new Teams commit can change its app dependency lockfile,
       # so the npm sources are regenerated with it. The script turns the
       # changes into a pull request.
       - name: Check sources and propose updates

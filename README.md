@@ -8,7 +8,7 @@ read Word paragraphs and replace their text. The changes go through an Office
 add-in, so Office saves them and coauthors see them as usual.
 
 This repository only contains the packaging. The app, including the Office
-bridge, lives in [nosini/teams-for-linux](https://github.com/nosini/teams-for-linux);
+bridge, lives in [nosini/teams-for-linux-mcp](https://github.com/nosini/teams-for-linux-mcp);
 Teams for Linux itself is developed upstream.
 
 ## Installing
@@ -63,7 +63,7 @@ Point your agent at the bridge's private socket:
 ~/.var/app/eu.nosini.TeamsOffice/config/teams-for-linux/mcp/bridge.sock
 ```
 
-The [Office agents guide](https://github.com/nosini/teams-for-linux/blob/feature/mcp-office/docs-site/docs/office-agents.md)
+The [Office agents guide](https://github.com/nosini/teams-for-linux-mcp/blob/feature/mcp-office/docs/office-agents.md)
 explains the tools, background tabs, automatic setup, how to export a small
 MCP relay and how to pass the socket into a container.
 
@@ -129,7 +129,7 @@ folder.
 The packaging files in this repository are licensed under the GNU Affero
 General Public License, version 3 (see [LICENSE](LICENSE)). Teams for Linux
 and the Office bridge are under the GNU General Public License, version 3 or
-later; see the [app's repository](https://github.com/nosini/teams-for-linux).
+later; see the [app's repository](https://github.com/nosini/teams-for-linux-mcp).
 
 Building it yourself, publishing, and how the package works are described
 in [docs/development.md](docs/development.md).

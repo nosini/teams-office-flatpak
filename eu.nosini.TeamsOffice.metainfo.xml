@@ -27,8 +27,8 @@
   </description>
   <launchable type="desktop-id">eu.nosini.TeamsOffice.desktop</launchable>
   <url type="homepage">https://github.com/IsmaelMartinez/teams-for-linux</url>
-  <url type="bugtracker">https://github.com/nosini/teams-for-linux/issues</url>
-  <url type="vcs-browser">https://github.com/nosini/teams-for-linux</url>
+  <url type="bugtracker">https://github.com/nosini/teams-for-linux-mcp/issues</url>
+  <url type="vcs-browser">https://github.com/nosini/teams-for-linux-mcp</url>
   <screenshots>
     <screenshot type="default">
       <caption>General chat</caption>

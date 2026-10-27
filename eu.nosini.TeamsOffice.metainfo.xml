@@ -45,6 +45,12 @@
   </branding>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.0-4" date="2026-10-27">
+      <description>
+        <p>Agents can make multiple Word and Excel edits in one call, with smaller responses and fewer repeated reads.</p>
+        <p>Editing one Word paragraph no longer forces agents to reread unrelated paragraphs. Checks for changes made by other editors remain in place.</p>
+      </description>
+    </release>
     <release version="2.27.0-3" date="2026-10-27">
       <description>
         <p>Agents can read and change Excel column widths and row heights, or use AutoFit to size them to the contents of a selected range.</p>

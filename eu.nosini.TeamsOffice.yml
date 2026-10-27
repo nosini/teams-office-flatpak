@@ -102,8 +102,8 @@ modules:
         url: https://github.com/nosini/teams-for-linux-mcp.git
         # New source tags pin Teams for Linux as a Git submodule.
         disable-submodules: false
-        tag: office-v2.27.0-3
-        commit: df5faaf3afd87042b0bfdf26d2c571b0ac29f0a8
+        tag: office-v2.27.0-4
+        commit: 58b97669fdd168397a7d0ae267a5a8a2d930b2b8
         x-checker-data:
           type: git
           # A -N suffix marks a later app build on the same upstream version.

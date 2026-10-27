@@ -45,6 +45,12 @@
   </branding>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.0-3" date="2026-10-27">
+      <description>
+        <p>Agents can read and change Excel column widths and row heights, or use AutoFit to size them to the contents of a selected range.</p>
+        <p>The Office bridge keeps document discovery and setup stable through transient failures.</p>
+      </description>
+    </release>
     <release version="2.27.0-2" date="2026-10-22">
       <description>
         <p>Agents can create Word documents in the current folder or another existing SharePoint folder, open them in background tabs and import the Office Bridge automatically.</p>

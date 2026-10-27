@@ -302,11 +302,35 @@ updates.
 ### Shared remote
 
 [flatpak-repo](https://github.com/nosini/flatpak-repo) collects the
-published packages into the shared `nosini` remote. After the first
-publication, add an entry for this app to its `apps.json`, listing every
-extension the build exports. This one exports `Debug`, for the native
-libraries; Electron keeps its translations in the app, so there is no
-`Locale`.
+published packages into the shared `nosini` remote. Its `apps.json` registers
+this app's `.flatpakref` and signing-key fingerprint. The collector discovers
+all architectures and exported extensions, including `Debug`, automatically.
+
+After a successful Pages deployment, the `announce` job sends an
+`app-published` event to the collector so installed copies can receive the
+update without waiting for its six-hour schedule. Failed deployments,
+prereleases and cache-only builds do not announce a publication. A failed
+notification leaves the published app remote intact; rerun the failed job
+after correcting its token, or start collection manually.
+
+Create a [fine-grained personal access token](https://github.com/settings/personal-access-tokens/new)
+with access to `nosini/flatpak-repo` only and **Contents: Read and write**.
+Store it in this packaging repository as `FLATPAK_REPO_DISPATCH_TOKEN`:
+
+```sh
+gh secret set FLATPAK_REPO_DISPATCH_TOKEN --repo nosini/teams-office-flatpak
+```
+
+Enter the token at the prompt. The workflow passes it only to the notification
+job, which neither checks out nor builds app code. The notification job fails
+with a clear error if the secret is missing. GitHub's default `GITHUB_TOKEN`
+cannot send events to a different repository.
+
+To collect a release that has already been published:
+
+```sh
+gh workflow run publish.yml --repo nosini/flatpak-repo --ref main
+```
 
 ## Updating
 
